@@ -11,6 +11,10 @@
   margin-top: 3pt;
 }
 
+#search-results > .ant-spin {
+  margin-top: 42px;
+}
+
 #search-results-list {
   margin-top: 42px;
 }

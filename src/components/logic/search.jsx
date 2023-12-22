@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const url = "https://en.wikipedia.org/w/api.php";
@@ -10,7 +10,7 @@ export class SearchOperation {
       srqiprofile: params.get("srqiprofile"),
     };
     this._suspense = suspense ?? {
-      status: "static",
+      status: "pending",
       suspender: null,
     };
   }
@@ -29,6 +29,10 @@ export class SearchOperation {
     }
   }
 
+  get ready() {
+    return this._suspense.status === "success";
+  }
+
   _fetch() {
     const params = new URLSearchParams({
       action: "query",
@@ -44,15 +48,10 @@ export class SearchOperation {
         .then((response) => response.json())
         .then(
           (response) =>
-            new Promise((resolve, _reject) =>
-              setTimeout(() => {
-                this._suspense = {
-                  status: "success",
-                  results: response,
-                };
-                resolve();
-              }, 10000)
-            )
+            (this._suspense = {
+              status: "success",
+              results: response,
+            })
         )
         .catch((error) => {
           console.log(error);
@@ -62,6 +61,7 @@ export class SearchOperation {
           };
         }),
     };
+    return this;
   }
 
   static pageLink(result) {
@@ -71,14 +71,17 @@ export class SearchOperation {
 
 export const SearchContext = createContext(null);
 
+export function useSearchResults() {
+  const search = useContext(SearchContext);
+  return search.results();
+}
+
 export function SearchLogic({ children }) {
   let [searchParams, _setSearchParams] = useSearchParams();
   const search = useMemo(
-    () => new SearchOperation(searchParams),
+    () => new SearchOperation(searchParams)._fetch(),
     [searchParams]
   );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => search._fetch(), [searchParams]);
 
   return (
     <SearchContext.Provider value={search}>{children}</SearchContext.Provider>

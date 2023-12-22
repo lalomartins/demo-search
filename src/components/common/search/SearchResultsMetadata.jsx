@@ -1,12 +1,11 @@
-import { useContext } from "react";
-
-import { SearchContext } from "../../logic/search";
+import { useSearchResults } from "../../logic/search";
 
 export function SearchResultsMetadata() {
-  const results = useContext(SearchContext).results();
+  const results = useSearchResults();
+
   return (
     <p id="search-results-metadata" className="metadata">
-      {results?.query.searchinfo.totalhits} total results
+      {results.query.searchinfo.totalhits} total results
     </p>
   );
 }

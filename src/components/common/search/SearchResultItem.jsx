@@ -1,6 +1,4 @@
-import { useContext } from "react";
-
-import { SearchOperation, SearchContext } from "../../logic/search";
+import { SearchOperation, useSearchResults } from "../../logic/search";
 
 export function SearchResultItem({ result }) {
   return (
@@ -24,11 +22,11 @@ export function SearchResultItem({ result }) {
   );
 }
 export function SearchResultsList({ result }) {
-  const results = useContext(SearchContext).results();
+  const results = useSearchResults();
 
   return (
     <div id="search-results-list">
-      {results?.query.search.map((result) => (
+      {results.query.search.map((result) => (
         <SearchResultItem key={result.pageid} result={result} />
       ))}
     </div>
