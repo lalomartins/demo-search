@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
@@ -16,13 +16,13 @@ class SearchResultPage {
 export class SearchOperation {
   static PAGE_LEN = 10;
 
-  constructor(params, suspense) {
-    this.searchstring = params.get("q");
+  constructor(params, state) {
+    this.searchstring = params.get("q") ?? state.q;
     this.options = {
       srqiprofile: params.get("r") ?? "engine_autoselect",
     };
     this.page = params.get("page") ?? 1;
-    this._suspense = suspense ?? {
+    this._suspense = {
       status: "pending",
       suspender: null,
     };
@@ -101,18 +101,19 @@ export function useSearchResults() {
 }
 
 export function SearchLogic({ children }) {
+  const location = useLocation();
   const [searchParams, _setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const search = useMemo(
-    () => new SearchOperation(searchParams)._fetch(),
-    [searchParams]
+    () => new SearchOperation(searchParams, location.state)._fetch(),
+    [location.state, searchParams]
   );
   useEffect(() => {
-    const q = searchParams.get("q");
+    const q = search.searchstring;
     if (q == null || q?.length === 0) {
       navigate("/", { replace: true });
     }
-  }, [navigate, searchParams]);
+  }, [navigate, search.searchstring]);
 
   return (
     <SearchContext.Provider value={search}>{children}</SearchContext.Provider>

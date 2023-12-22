@@ -2,16 +2,16 @@ import { useContext } from "react";
 import { Input } from "antd";
 
 import { SearchContext } from "../../logic/search";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function SearchBox() {
   const search = useContext(SearchContext);
-  const [searchParams, _setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  function onSearch(value, _e, info) {
-    const newParams = new URLSearchParams(Array.from(searchParams.entries()));
-    newParams.set("q", value);
-    navigate(`/search?${newParams}`);
+  function onSearch(value, _e, _info) {
+    if (search == null) {
+      navigate("/search", { state: { q: value } });
+    } else {
+    }
   }
 
   return (
