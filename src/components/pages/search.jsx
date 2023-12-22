@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import "./search.css";
 import { SearchLogic } from "../logic/search";
 import { SearchBox } from "../common/search/SearchBox";
@@ -6,10 +8,12 @@ import { SearchTools } from "../common/search/SearchTools";
 
 export function SearchPage() {
   return (
-    <SearchLogic>
-      <SearchBox />
-      <SearchTools />
-      <SearchResultsContainer />
-    </SearchLogic>
+    <Suspense>
+      <SearchLogic>
+        <SearchBox />
+        <SearchTools />
+        <SearchResultsContainer />
+      </SearchLogic>
+    </Suspense>
   );
 }

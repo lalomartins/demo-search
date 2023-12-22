@@ -1,10 +1,10 @@
 import { Radio, Space } from "antd";
 import { useContext } from "react";
 
-import { SearchResultsContext } from "../../logic/search";
+import { SearchContext } from "../../logic/search";
 
 export function SearchTools() {
-  const results = useContext(SearchResultsContext);
+  const search = useContext(SearchContext);
 
   return (
     <div id="search-tools">
@@ -12,7 +12,7 @@ export function SearchTools() {
         <Radio.Group
           name="srqiprofile"
           size="small"
-          defaultValue={results.options.srqiprofile}
+          defaultValue={search.options.srqiprofile}
         >
           <Radio.Button value="engine_autoselect">Default ranking</Radio.Button>
           <Radio.Button value="popular_inclinks_pv">

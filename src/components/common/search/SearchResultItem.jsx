@@ -1,14 +1,14 @@
 import { useContext } from "react";
 
-import { SearchResultsContext } from "../../logic/search";
+import { SearchOperation, SearchContext } from "../../logic/search";
 
 export function SearchResultItem({ result }) {
-  // FIXME
-  const results = useContext(SearchResultsContext);
-
   return (
     <div className="search-result-item" key={result.pageid}>
-      <a className="search-result-title" href={results.pageLink(result)}>
+      <a
+        className="search-result-title"
+        href={SearchOperation.pageLink(result)}
+      >
         {result.title}
       </a>
       <p className="metadata">
@@ -24,11 +24,11 @@ export function SearchResultItem({ result }) {
   );
 }
 export function SearchResultsList({ result }) {
-  const results = useContext(SearchResultsContext);
+  const results = useContext(SearchContext).results();
 
   return (
     <div id="search-results-list">
-      {results.query.search.map((result) => (
+      {results?.query.search.map((result) => (
         <SearchResultItem key={result.pageid} result={result} />
       ))}
     </div>

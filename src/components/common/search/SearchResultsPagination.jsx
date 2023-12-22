@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Pagination } from "antd";
 
-import { SearchResultsContext } from "../../logic/search";
+import { SearchContext } from "../../logic/search";
 
 export function SearchResultsPagination() {
-  const results = useContext(SearchResultsContext);
+  const results = useContext(SearchContext).results();
 
   return (
     <Pagination
@@ -12,7 +12,7 @@ export function SearchResultsPagination() {
       hideOnSinglePage
       showSizeChanger={false}
       defaultCurrent={1}
-      total={results.query.searchinfo?.totalhits ?? 0}
+      total={results?.query.searchinfo?.totalhits ?? 0}
     />
   );
 }
