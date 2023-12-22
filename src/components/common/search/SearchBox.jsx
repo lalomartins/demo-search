@@ -5,7 +5,7 @@ import { SearchResultsContext } from "../../logic/search";
 
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-export default function SearchBox() {
+export function SearchBox() {
   const results = useContext(SearchResultsContext);
 
   return (

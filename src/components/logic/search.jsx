@@ -3,6 +3,10 @@ import { createContext, useState } from "react";
 // Copied from https://www.mediawiki.org/wiki/API:Search with adaptations
 const dummyData = {
   searchstring: "Nelson Mandela",
+  options: {
+    srwhat: "nearmatch",
+    srprofile: "classic",
+  },
   batchcomplete: "",
   continue: {
     sroffset: 10,

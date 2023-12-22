@@ -1,10 +1,14 @@
-import { Pagination, Radio, Space } from "antd";
+import { useContext } from "react";
+import { Pagination } from "antd";
 
 import "./search.css";
 import { SearchLogic, SearchResultsContext } from "../logic/search";
-import SearchBox from "../common/search/SearchBox";
+import { SearchBox } from "../common/search/SearchBox";
+import { SearchTools } from "../common/search/SearchTools";
 
 export function SearchPage() {
+  useContext(SearchResultsContext);
+
   return (
     <SearchLogic>
       <SearchResultsContext.Consumer>
@@ -13,30 +17,7 @@ export function SearchPage() {
           (results) => (
             <>
               <SearchBox />
-              <div id="search-tools">
-                <Space>
-                  <Radio.Group
-                    name="srwhat"
-                    size="small"
-                    defaultValue="nearmatch"
-                  >
-                    <Radio.Button value="nearmatch">Standard</Radio.Button>
-                    <Radio.Button value="text">Exact</Radio.Button>
-                    <Radio.Button value="title">Titles</Radio.Button>
-                  </Radio.Group>
-                  <Radio.Group
-                    name="srprofile"
-                    size="small"
-                    defaultValue="classic"
-                  >
-                    <Radio.Button value="classic">Default ranking</Radio.Button>
-                    <Radio.Button value="popular_inclinks_pv">
-                      Popular (views)
-                    </Radio.Button>
-                    <Radio.Button value="popular_inclinks">Links</Radio.Button>
-                  </Radio.Group>
-                </Space>
-              </div>
+              <SearchTools />
               <div id="search-results">
                 <p id="search-results-metadata" className="metadata">
                   {results.query.searchinfo.totalhits} total results
@@ -74,26 +55,5 @@ export function SearchPage() {
         }
       </SearchResultsContext.Consumer>
     </SearchLogic>
-  );
-}
-
-function undefined({}) {
-  return (
-    <div id="search-tools">
-      <Space>
-        <Radio.Group name="srwhat" size="small" defaultValue="nearmatch">
-          <Radio.Button value="nearmatch">Standard</Radio.Button>
-          <Radio.Button value="text">Exact</Radio.Button>
-          <Radio.Button value="title">Titles</Radio.Button>
-        </Radio.Group>
-        <Radio.Group name="srprofile" size="small" defaultValue="classic">
-          <Radio.Button value="classic">Default ranking</Radio.Button>
-          <Radio.Button value="popular_inclinks_pv">
-            Popular (views)
-          </Radio.Button>
-          <Radio.Button value="popular_inclinks">Links</Radio.Button>
-        </Radio.Group>
-      </Space>
-    </div>
   );
 }
