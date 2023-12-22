@@ -1,7 +1,7 @@
 import { Radio, Space } from "antd";
 import { useContext } from "react";
 
-import { SearchResultsContext } from "../logic/search";
+import { SearchResultsContext } from "../../logic/search";
 
 export function SearchTools() {
   const results = useContext(SearchResultsContext);
