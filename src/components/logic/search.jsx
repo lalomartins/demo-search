@@ -14,11 +14,14 @@ class SearchResultPage {
 }
 
 export class SearchOperation {
+  static PAGE_LEN = 10;
+
   constructor(params, suspense) {
     this.searchstring = params.get("q");
     this.options = {
       srqiprofile: params.get("r") ?? "engine_autoselect",
     };
+    this.page = params.get("page") ?? 1;
     this._suspense = suspense ?? {
       status: "pending",
       suspender: null,
@@ -50,6 +53,7 @@ export class SearchOperation {
       srsearch: this.searchstring,
       format: "json",
       srqiprofile: this.options.srqiprofile,
+      sroffset: (this.page - 1) * SearchOperation.PAGE_LEN,
       origin: "*",
     });
     this._suspense = {
