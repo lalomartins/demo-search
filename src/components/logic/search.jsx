@@ -1,5 +1,5 @@
-import { createContext, useContext, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { createContext, useContext, useEffect, useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
@@ -102,10 +102,17 @@ export function useSearchResults() {
 
 export function SearchLogic({ children }) {
   const [searchParams, _setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const search = useMemo(
     () => new SearchOperation(searchParams)._fetch(),
     [searchParams]
   );
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q == null || q?.length === 0) {
+      navigate("/", { replace: true });
+    }
+  }, [navigate, searchParams]);
 
   return (
     <SearchContext.Provider value={search}>{children}</SearchContext.Provider>
