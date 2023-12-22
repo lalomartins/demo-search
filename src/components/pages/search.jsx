@@ -1,12 +1,8 @@
-import { useContext } from "react";
-import { Input, Pagination, Radio, Space } from "antd";
+import { Pagination, Radio, Space } from "antd";
 
 import "./search.css";
 import { SearchLogic, SearchResultsContext } from "../logic/search";
-
-const { Search } = Input;
-
-const onSearch = (value, _e, info) => console.log(info?.source, value);
+import SearchBox from "../common/search/SearchBox";
 
 export function SearchPage() {
   return (
@@ -16,14 +12,7 @@ export function SearchPage() {
           // this is temporary while I extract the components
           (results) => (
             <>
-              <div id="search-box">
-                <Search
-                  placeholder="input search text"
-                  allowClear
-                  value={results.searchstring}
-                  onSearch={onSearch}
-                />
-              </div>
+              <SearchBox />
               <div id="search-tools">
                 <Space>
                   <Radio.Group
@@ -88,4 +77,23 @@ export function SearchPage() {
   );
 }
 
-// const results = useContext(SearchResultsContext);
+function undefined({}) {
+  return (
+    <div id="search-tools">
+      <Space>
+        <Radio.Group name="srwhat" size="small" defaultValue="nearmatch">
+          <Radio.Button value="nearmatch">Standard</Radio.Button>
+          <Radio.Button value="text">Exact</Radio.Button>
+          <Radio.Button value="title">Titles</Radio.Button>
+        </Radio.Group>
+        <Radio.Group name="srprofile" size="small" defaultValue="classic">
+          <Radio.Button value="classic">Default ranking</Radio.Button>
+          <Radio.Button value="popular_inclinks_pv">
+            Popular (views)
+          </Radio.Button>
+          <Radio.Button value="popular_inclinks">Links</Radio.Button>
+        </Radio.Group>
+      </Space>
+    </div>
+  );
+}
