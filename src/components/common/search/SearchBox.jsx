@@ -19,7 +19,7 @@ export function SearchBox() {
       <Input.Search
         placeholder="input search text"
         allowClear
-        defaultValue={search?.searchstring}
+        defaultValue={search?.searchString}
         onSearch={onSearch}
       />
     </div>

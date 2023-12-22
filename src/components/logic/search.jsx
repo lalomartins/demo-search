@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useMemo } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
@@ -16,12 +16,12 @@ class SearchResultPage {
 export class SearchOperation {
   static PAGE_LEN = 10;
 
-  constructor(params, state) {
-    this.searchstring = params.get("q") ?? state.q;
+  constructor(searchString, page, ranking) {
+    this.searchString = searchString;
     this.options = {
-      srqiprofile: params.get("r") ?? "engine_autoselect",
+      srqiprofile: ranking,
     };
-    this.page = params.get("page") ?? 1;
+    this.page = page;
     this._suspense = {
       status: "pending",
       suspender: null,
@@ -50,7 +50,7 @@ export class SearchOperation {
     const params = new URLSearchParams({
       action: "query",
       list: "search",
-      srsearch: this.searchstring,
+      srsearch: this.searchString,
       format: "json",
       srqiprofile: this.options.srqiprofile,
       sroffset: (this.page - 1) * this.constructor.PAGE_LEN,
@@ -102,18 +102,22 @@ export function useSearchResults() {
 
 export function SearchLogic({ children }) {
   const location = useLocation();
-  const [searchParams, _setSearchParams] = useSearchParams();
+  const [searchString, setSearchString] = useState(location.state?.q);
+  const [page, setPage] = useState(1);
+  const [ranking, setRanking] = useState("engine_autoselect");
   const navigate = useNavigate();
   const search = useMemo(
-    () => new SearchOperation(searchParams, location.state)._fetch(),
-    [location.state, searchParams]
+    () => new SearchOperation(searchString, page, ranking)._fetch(),
+    [page, ranking, searchString]
   );
   useEffect(() => {
-    const q = search.searchstring;
-    if (q == null || q?.length === 0) {
+    if (searchString == null || searchString?.length === 0) {
       navigate("/", { replace: true });
     }
-  }, [navigate, search.searchstring]);
+  }, [navigate, searchString]);
+  search.setSearchString = setSearchString;
+  search.setPage = setPage;
+  search.setRanking = setRanking;
 
   return (
     <SearchContext.Provider value={search}>{children}</SearchContext.Provider>
