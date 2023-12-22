@@ -97,7 +97,7 @@ export function useSearchResults() {
 }
 
 export function SearchLogic({ children }) {
-  let [searchParams, _setSearchParams] = useSearchParams();
+  const [searchParams, _setSearchParams] = useSearchParams();
   const search = useMemo(
     () => new SearchOperation(searchParams)._fetch(),
     [searchParams]
