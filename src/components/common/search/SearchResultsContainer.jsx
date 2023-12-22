@@ -1,15 +1,14 @@
 import { useContext } from "react";
 import { Pagination } from "antd";
 import { SearchResultsContext } from "../../logic/search";
+import { SearchResultsMetadata } from "./SearchResultsMetadata";
 
 export function SearchResultsContainer({ result }) {
   const results = useContext(SearchResultsContext);
 
   return (
     <div id="search-results">
-      <p id="search-results-metadata" className="metadata">
-        {results.query.searchinfo.totalhits} total results
-      </p>
+      <SearchResultsMetadata />
       <div id="search-results-list">
         {results.query.search.map((result) => (
           <div className="search-result-item" key={result.pageid}>
