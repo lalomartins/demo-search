@@ -17,7 +17,7 @@ export class SearchOperation {
   constructor(params, suspense) {
     this.searchstring = params.get("q");
     this.options = {
-      srqiprofile: params.get("srqiprofile"),
+      srqiprofile: params.get("r") ?? "engine_autoselect",
     };
     this._suspense = suspense ?? {
       status: "pending",
@@ -49,7 +49,7 @@ export class SearchOperation {
       list: "search",
       srsearch: this.searchstring,
       format: "json",
-      srqiprofile: "engine_autoselect",
+      srqiprofile: this.options.srqiprofile,
       origin: "*",
     });
     this._suspense = {
@@ -57,18 +57,25 @@ export class SearchOperation {
       suspender: fetch(`${url}?${params}`)
         .then((response) => response.json())
         .then((response) => {
-          return (this._suspense = {
-            status: "success",
-            results: {
-              ...response,
-              query: {
-                ...response.query,
-                search: response.query.search.map(
-                  (item) => new SearchResultPage(item)
-                ),
+          if (response.error != null) {
+            this._suspense = {
+              status: "error",
+              results: response.error,
+            };
+          } else {
+            this._suspense = {
+              status: "success",
+              results: {
+                ...response,
+                query: {
+                  ...response.query,
+                  search: response.query.search.map(
+                    (item) => new SearchResultPage(item)
+                  ),
+                },
               },
-            },
-          });
+            };
+          }
         })
         .catch((error) => {
           console.log(error);

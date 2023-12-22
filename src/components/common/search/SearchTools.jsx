@@ -10,7 +10,7 @@ export function SearchTools() {
     <div id="search-tools">
       <Space>
         <Radio.Group
-          name="srqiprofile"
+          name="r"
           size="small"
           defaultValue={search.options.srqiprofile}
         >
