@@ -2,15 +2,11 @@ import { Radio, Space } from "antd";
 import { useContext } from "react";
 
 import { SearchContext } from "../../logic/search";
-import { useSearchParams } from "react-router-dom";
 
 export function SearchTools() {
   const search = useContext(SearchContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   function onChange(e) {
-    const newParams = new URLSearchParams(Array.from(searchParams.entries()));
-    newParams.set("r", e.target.value);
-    setSearchParams(newParams);
+    search.setRanking(e.target.value);
   }
 
   return (

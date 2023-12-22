@@ -11,6 +11,7 @@ export function SearchBox() {
     if (search == null) {
       navigate("/search", { state: { q: value } });
     } else {
+      search.setSearchString(value);
     }
   }
 
