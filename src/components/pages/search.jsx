@@ -54,7 +54,6 @@ export function SearchPage() {
           allowClear
           value={results.searchstring}
           onSearch={onSearch}
-          style={{ width: "var(--content-width)" }}
         />
       </div>
       <div id="search-tools">
@@ -73,7 +72,7 @@ export function SearchPage() {
           </Radio.Group>
         </Space>
       </div>
-      <div id="search-results" style={{ width: "var(--content-width)" }}>
+      <div id="search-results">
         <p id="search-results-metadata" className="metadata">
           {results.query.searchinfo.totalhits} total results
         </p>

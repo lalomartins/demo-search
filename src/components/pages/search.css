@@ -2,6 +2,11 @@
   color: #888;
 }
 
+#search-box .ant-input-search,
+#search-results {
+  width: var(--content-width);
+}
+
 #search-tools {
   margin-top: 3pt;
 }
