@@ -3,6 +3,16 @@ import { useSearchParams } from "react-router-dom";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
+class SearchResultPage {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+
+  link() {
+    return `http://en.wikipedia.org/?curid=${this.pageid}`;
+  }
+}
+
 export class SearchOperation {
   constructor(params, suspense) {
     this.searchstring = params.get("q");
@@ -46,13 +56,20 @@ export class SearchOperation {
       status: "pending",
       suspender: fetch(`${url}?${params}`)
         .then((response) => response.json())
-        .then(
-          (response) =>
-            (this._suspense = {
-              status: "success",
-              results: response,
-            })
-        )
+        .then((response) => {
+          return (this._suspense = {
+            status: "success",
+            results: {
+              ...response,
+              query: {
+                ...response.query,
+                search: response.query.search.map(
+                  (item) => new SearchResultPage(item)
+                ),
+              },
+            },
+          });
+        })
         .catch((error) => {
           console.log(error);
           this._suspense = {
@@ -62,10 +79,6 @@ export class SearchOperation {
         }),
     };
     return this;
-  }
-
-  static pageLink(result) {
-    return `http://en.wikipedia.org/?curid=${result.pageid}`;
   }
 }
 

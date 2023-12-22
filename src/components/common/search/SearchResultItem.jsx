@@ -1,12 +1,9 @@
-import { SearchOperation, useSearchResults } from "../../logic/search";
+import { useSearchResults } from "../../logic/search";
 
 export function SearchResultItem({ result }) {
   return (
     <div className="search-result-item" key={result.pageid}>
-      <a
-        className="search-result-title"
-        href={SearchOperation.pageLink(result)}
-      >
+      <a className="search-result-title" href={result.link()}>
         {result.title}
       </a>
       <p className="metadata">
