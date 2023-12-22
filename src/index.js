@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ConfigProvider } from "antd";
 
 import "./index.css";
-import { Layout } from "./layout";
+import { MainLayout } from "./layout";
 import { HomePage } from "./components/pages/home";
 import { SearchPage } from "./components/pages/search";
 import { ErrorPage } from "./components/pages/error";
@@ -12,7 +13,7 @@ import reportWebVitals from "./reportWebVitals";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -30,7 +31,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ConfigProvider theme={{ cssVar: true }}>
+      <RouterProvider router={router} />
+    </ConfigProvider>
   </React.StrictMode>
 );
 
