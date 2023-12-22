@@ -26,13 +26,7 @@ export function MainLayout() {
         />
         <h1 style={{ color: "whitesmoke" }}>React Search Demo</h1>
       </Header>
-      <Content
-        style={{
-          padding: "24px var(--content-hpadding)",
-          minHeight: "calc(100vh - 128px)",
-          boxSizing: "border-box",
-        }}
-      >
+      <Content>
         <Outlet />
       </Content>
       <Footer style={{ textAlign: "center" }}>

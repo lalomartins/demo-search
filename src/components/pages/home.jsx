@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import "./home.css";
+import { SearchBox } from "../common/search/SearchBox";
 
 export function HomePage() {
-  return <>
-    <h2>TODO</h2>
-    <Link to="/search?q=react">Try it out</Link>
-  </>;
+  return (
+    <div id="home-search-box">
+      <SearchBox />
+    </div>
+  );
 }

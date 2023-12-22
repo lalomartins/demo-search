@@ -26,3 +26,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+main.ant-layout-content {
+  display: flex;
+  flex-direction: column;
+  padding: 24px var(--content-hpadding);
+  min-height: calc(100vh - 128px);
+  box-sizing: border-box;
+}
