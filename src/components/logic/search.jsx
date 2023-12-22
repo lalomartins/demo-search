@@ -1,12 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+
+const url = "https://en.wikipedia.org/w/api.php";
 
 // Copied from https://www.mediawiki.org/wiki/API:Search with adaptations
 const dummyData = {
-  searchstring: "Nelson Mandela",
-  options: {
-    srwhat: "nearmatch",
-    srprofile: "classic",
-  },
   batchcomplete: "",
   continue: {
     sroffset: 10,
@@ -42,8 +39,12 @@ const dummyData = {
 };
 
 export class SearchResults {
-  constructor() {
-    Object.assign(this, dummyData);
+  constructor(apiData, params) {
+    Object.assign(this, apiData);
+    this.searchstring = params.get("srsearch");
+    this.options = {
+      srqiprofile: params.get("srqiprofile"),
+    };
   }
 
   pageLink(result) {
@@ -51,14 +52,37 @@ export class SearchResults {
   }
 
   static makeDummy() {
-    return new SearchResults();
+    return new SearchResults(
+      dummyData,
+      new URLSearchParams({
+        srsearch: "Nelson Mandela",
+        srqiprofile: "engine_autoselect",
+      })
+    );
   }
 }
 
 export const SearchResultsContext = createContext(null);
 
 export function SearchLogic({ children }) {
-  const [results, _setResults] = useState(SearchResults.makeDummy);
+  const [results, setResults] = useState(SearchResults.makeDummy);
+  useEffect(() => {
+    const params = new URLSearchParams({
+      action: "query",
+      list: "search",
+      srsearch: "Nelson Mandela",
+      format: "json",
+      srqiprofile: "engine_autoselect",
+      origin: "*",
+    });
+    fetch(`${url}?${params}`)
+      .then((response) => response.json())
+      .then((response) => setResults(new SearchResults(response, params)))
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <SearchResultsContext.Provider value={results}>
       {children}

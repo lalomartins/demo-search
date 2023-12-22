@@ -29,7 +29,7 @@ export function SearchResultsList({ result }) {
   return (
     <div id="search-results-list">
       {results.query.search.map((result) => (
-        <SearchResultItem result={result} />
+        <SearchResultItem key={result.pageid} result={result} />
       ))}
     </div>
   );

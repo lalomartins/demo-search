@@ -12,7 +12,7 @@ export function SearchResultsPagination() {
       hideOnSinglePage
       showSizeChanger={false}
       defaultCurrent={1}
-      total={results.query.searchinfo.totalhits}
+      total={results.query.searchinfo?.totalhits ?? 0}
     />
   );
 }
