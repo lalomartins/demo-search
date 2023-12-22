@@ -53,7 +53,7 @@ export class SearchOperation {
       srsearch: this.searchstring,
       format: "json",
       srqiprofile: this.options.srqiprofile,
-      sroffset: (this.page - 1) * SearchOperation.PAGE_LEN,
+      sroffset: (this.page - 1) * this.constructor.PAGE_LEN,
       origin: "*",
     });
     this._suspense = {
