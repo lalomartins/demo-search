@@ -6,6 +6,14 @@ body {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --content-width: 42rem;
+  --content-hpadding: 1rem;
+}
+
+@media only screen and (min-width: 1200px) and (orientation: landscape) {
+  body {
+    --content-hpadding: 10rem;
+  }
 }
 
 *,
