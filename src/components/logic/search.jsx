@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -74,8 +74,6 @@ export class SearchOperation {
   }
 }
 
-export const SearchContext = createContext(null);
-
 export function useSearchResults() {
   const searchSlice = useSelector((state) => state.search);
   switch (searchSlice.status) {
@@ -95,16 +93,14 @@ export function SearchLogic({ children }) {
 
   const searchSlice = useSelector((state) => state.search);
   const navigate = useNavigate();
-  const search = useMemo(
-    () =>
-      new SearchOperation(
-        searchSlice.searchString,
-        searchSlice.page,
-        searchSlice.ranking,
-        dispatch
-      )._fetch(),
-    [searchSlice.page, searchSlice.ranking, searchSlice.searchString]
-  );
+  useEffect(() => {
+    new SearchOperation(
+      searchSlice.searchString,
+      searchSlice.page,
+      searchSlice.ranking,
+      dispatch
+    )._fetch();
+  }, [searchSlice.page, searchSlice.ranking, searchSlice.searchString]);
   useEffect(() => {
     if (
       searchSlice.searchString == null ||
@@ -114,7 +110,5 @@ export function SearchLogic({ children }) {
     }
   }, [navigate, searchSlice.searchString]);
 
-  return (
-    <SearchContext.Provider value={search}>{children}</SearchContext.Provider>
-  );
+  return <>{children}</>;
 }
