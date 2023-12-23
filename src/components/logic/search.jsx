@@ -1,5 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+
+import { newSearch, gotoPage, setRankingProfile } from "../../state/search";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
@@ -102,22 +105,30 @@ export function useSearchResults() {
 
 export function SearchLogic({ children }) {
   const location = useLocation();
-  const [searchString, setSearchString] = useState(location.state?.q);
-  const [page, setPage] = useState(1);
-  const [ranking, setRanking] = useState("engine_autoselect");
+  const dispatch = useDispatch();
+
+  const searchSlice = useSelector((state) => state.search);
+  let { searchString, page } = searchSlice;
+  // if (searchSlice.searchString === "empty") {
+  // TODO this is temporary until I port the search box
+  if (searchSlice.searchString.length === 0) {
+    searchString = location.state.q;
+    page = 1;
+    dispatch(newSearch(searchString));
+  }
   const navigate = useNavigate();
   const search = useMemo(
-    () => new SearchOperation(searchString, page, ranking)._fetch(),
-    [page, ranking, searchString]
+    () => new SearchOperation(searchString, page, searchSlice.ranking)._fetch(),
+    [page, searchSlice.ranking, searchString]
   );
   useEffect(() => {
     if (searchString == null || searchString?.length === 0) {
       navigate("/", { replace: true });
     }
   }, [navigate, searchString]);
-  search.setSearchString = setSearchString;
-  search.setPage = setPage;
-  search.setRanking = setRanking;
+  search.setSearchString = (s) => dispatch(newSearch(s));
+  search.setPage = (page) => dispatch(gotoPage(page));
+  search.setRanking = (ranking) => dispatch(setRankingProfile(ranking));
 
   return (
     <SearchContext.Provider value={search}>{children}</SearchContext.Provider>
