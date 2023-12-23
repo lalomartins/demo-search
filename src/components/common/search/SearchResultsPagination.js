@@ -1,9 +1,9 @@
 import { html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import { Router } from "@capitec/omni-router";
+import "@lalomartins/shoestring-pagination";
 
 import { RouteAwareElement } from "../../../lib/RouteAwareElement";
-import "../Pagination";
 
 import { SearchOperation, useSearchResults } from "../../logic/search";
 

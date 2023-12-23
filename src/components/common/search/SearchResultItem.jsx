@@ -48,7 +48,7 @@ export class SearchResultItem extends LitElement {
   }
 }
 
-export function SearchResultsList({ result }) {
+export function SearchResultsList() {
   const results = useSearchResults();
 
   return (

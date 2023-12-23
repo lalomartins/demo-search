@@ -1,14 +1,8 @@
-import { SearchBox } from "../common/search/SearchBox";
-
-// this is temporary
 import { css, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
-import { createRoot } from "react-dom/client";
 
 @customElement("search-home-page")
-export class HomePageWrapper extends LitElement {
-  #reactRoot;
-
+export class HomePage extends LitElement {
   static styles = css`
     :host {
       display: flex;
@@ -30,7 +24,7 @@ export class HomePageWrapper extends LitElement {
 
   render() {
     return html`<div id="home-search-box">
-      <search-box />
+      <search-box></search-box>
     </div>`;
   }
 }

@@ -7,6 +7,7 @@
     "@babel/plugin-proposal-decorators": "^7.23.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@capitec/omni-router": "^0.1.5",
+    "@lalomartins/shoestring-pagination": "https://github.com/lalomartins/shoestring-pagination.git",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@polymer/app-layout": "^3.1.0",
     "@shoelace-style/shoelace": "^2.12.0",

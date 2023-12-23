@@ -4,7 +4,6 @@ import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path";
 import "@polymer/app-layout/app-scroll-effects/effects/waterfall";
 import "@polymer/app-layout/app-layout";
 
-import "./index.css";
 import "./components/common/layout/logo";
 import "./components/pages/home";
 import "./components/pages/search";
