@@ -6,6 +6,7 @@ const initialState = {
   page: 1,
   ranking: "engine_autoselect",
   results: null,
+  suspender: null,
 };
 
 export const searchSlice = createSlice({
@@ -23,14 +24,31 @@ export const searchSlice = createSlice({
       state.ranking = action.payload;
       state.page = 1;
     },
-    loadResults(state, action) {
+    startLoad(state, action) {
+      state.status = "pending";
+      state.suspender = action.payload;
+    },
+    loadFailed(state, action) {
+      state.status = "error";
       state.results = action.payload;
+      state.suspender = null;
+    },
+    loadResults(state, action) {
+      state.status = "success";
+      state.results = action.payload;
+      state.suspender = null;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { newSearch, gotoPage, setRankingProfile, loadResults } =
-  searchSlice.actions;
+export const {
+  newSearch,
+  gotoPage,
+  setRankingProfile,
+  startLoad,
+  loadFailed,
+  loadResults,
+} = searchSlice.actions;
 
 export default searchSlice.reducer;

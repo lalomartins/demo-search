@@ -1,8 +1,15 @@
-import { createContext, useContext, useEffect, useMemo } from "react";
+import { createContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { newSearch, gotoPage, setRankingProfile } from "../../state/search";
+import {
+  newSearch,
+  gotoPage,
+  setRankingProfile,
+  startLoad,
+  loadFailed,
+  loadResults,
+} from "../../state/search";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
@@ -19,34 +26,13 @@ class SearchResultPage {
 export class SearchOperation {
   static PAGE_LEN = 10;
 
-  constructor(searchString, page, ranking) {
+  constructor(searchString, page, ranking, dispatch) {
     this.searchString = searchString;
     this.options = {
       srqiprofile: ranking,
     };
     this.page = page;
-    this._suspense = {
-      status: "pending",
-      suspender: null,
-    };
-  }
-
-  // integrate with Suspense
-  results() {
-    switch (this._suspense.status) {
-      case "pending":
-        throw this._suspense.suspender;
-
-      case "error":
-        throw this._suspense.results;
-
-      default:
-        return this._suspense.results;
-    }
-  }
-
-  get ready() {
-    return this._suspense.status === "success";
+    this._dispatch = dispatch;
   }
 
   _fetch() {
@@ -59,39 +45,36 @@ export class SearchOperation {
       sroffset: (this.page - 1) * this.constructor.PAGE_LEN,
       origin: "*",
     });
-    this._suspense = {
-      status: "pending",
-      suspender: fetch(`${url}?${params}`)
-        .then((response) => response.json())
-        .then((response) => {
-          if (response.error != null) {
+    this._dispatch(
+      startLoad(
+        fetch(`${url}?${params}`)
+          .then((response) => response.json())
+          .then((response) => {
+            if (response.error != null) {
+              this._dispatch(loadFailed(response.error));
+            } else {
+              this._dispatch(
+                loadResults({
+                  ...response,
+                  query: {
+                    ...response.query,
+                    search: response.query.search.map(
+                      (item) => new SearchResultPage(item)
+                    ),
+                  },
+                })
+              );
+            }
+          })
+          .catch((error) => {
+            console.log(error);
             this._suspense = {
               status: "error",
-              results: response.error,
+              results: error,
             };
-          } else {
-            this._suspense = {
-              status: "success",
-              results: {
-                ...response,
-                query: {
-                  ...response.query,
-                  search: response.query.search.map(
-                    (item) => new SearchResultPage(item)
-                  ),
-                },
-              },
-            };
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          this._suspense = {
-            status: "error",
-            results: error,
-          };
-        }),
-    };
+          })
+      )
+    );
     return this;
   }
 }
@@ -99,8 +82,17 @@ export class SearchOperation {
 export const SearchContext = createContext(null);
 
 export function useSearchResults() {
-  const search = useContext(SearchContext);
-  return search.results();
+  const searchSlice = useSelector((state) => state.search);
+  switch (searchSlice.status) {
+    case "pending":
+      throw searchSlice.suspender;
+
+    case "error":
+      throw searchSlice.results;
+
+    default:
+      return searchSlice.results;
+  }
 }
 
 export function SearchLogic({ children }) {
@@ -118,7 +110,13 @@ export function SearchLogic({ children }) {
   }
   const navigate = useNavigate();
   const search = useMemo(
-    () => new SearchOperation(searchString, page, searchSlice.ranking)._fetch(),
+    () =>
+      new SearchOperation(
+        searchString,
+        page,
+        searchSlice.ranking,
+        dispatch
+      )._fetch(),
     [page, searchSlice.ranking, searchString]
   );
   useEffect(() => {

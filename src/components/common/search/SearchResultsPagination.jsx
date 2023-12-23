@@ -1,11 +1,11 @@
 import { Pagination } from "antd";
 
-import { SearchContext } from "../../logic/search";
+import { SearchContext, useSearchResults } from "../../logic/search";
 import { useContext } from "react";
 
 export function SearchResultsPagination() {
   const search = useContext(SearchContext);
-  const results = search.results();
+  const results = useSearchResults();
   function onChange(value) {
     search.setPage(value);
   }
