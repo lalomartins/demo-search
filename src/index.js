@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
 import { ConfigProvider } from "antd";
 
 import "./index.css";
@@ -9,6 +10,7 @@ import { HomePage } from "./components/pages/home";
 import { SearchPage } from "./components/pages/search";
 import { ErrorPage } from "./components/pages/error";
 import reportWebVitals from "./reportWebVitals";
+import { store } from "./state/store";
 
 const router = createBrowserRouter([
   {
@@ -31,9 +33,11 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ConfigProvider theme={{ cssVar: true }}>
-      <RouterProvider router={router} />
-    </ConfigProvider>
+    <Provider store={store}>
+      <ConfigProvider theme={{ cssVar: true }}>
+        <RouterProvider router={router} />
+      </ConfigProvider>
+    </Provider>
   </React.StrictMode>
 );
 
