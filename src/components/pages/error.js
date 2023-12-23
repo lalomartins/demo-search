@@ -1,7 +1,5 @@
 import { html, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
 
-@customElement("search-error-page")
 export class ErrorPage extends LitElement {
   render() {
     return html`
@@ -15,3 +13,4 @@ export class ErrorPage extends LitElement {
     `;
   }
 }
+window.customElements.define("search-error-page", ErrorPage);

@@ -1,13 +1,11 @@
 import { LitElement, css, html } from "lit";
-import { customElement } from "lit/decorators.js";
-import "@shoelace-style/shoelace/dist/components/spinner/spinner";
+import "@shoelace-style/shoelace/dist/components/spinner/spinner.js";
 
-import "./SearchResultsMetadata";
-import "./SearchResultsPagination";
-import "./SearchResultItem";
-import { SearchResultsConsumer } from "../../logic/search";
+import "./SearchResultsMetadata.js";
+import "./SearchResultsPagination.js";
+import "./SearchResultsList.js";
+import { SearchResultsConsumer } from "../../logic/search.js";
 
-@customElement("search-results-container")
 export class SearchResultsContainer extends SearchResultsConsumer(LitElement) {
   static styles = css`
     :host {
@@ -22,7 +20,7 @@ export class SearchResultsContainer extends SearchResultsConsumer(LitElement) {
 
   render() {
     if (this.searchStatus !== "success")
-      return html`<sl-spinner style="font-size: 3rem" />`;
+      return html`<sl-spinner style="font-size: 3rem"></sl-spinner>`;
     return html`
       <search-results-metadata></search-results-metadata>
       <search-results-list></search-results-list>
@@ -30,3 +28,7 @@ export class SearchResultsContainer extends SearchResultsConsumer(LitElement) {
     `;
   }
 }
+window.customElements.define(
+  "search-results-container",
+  SearchResultsContainer
+);

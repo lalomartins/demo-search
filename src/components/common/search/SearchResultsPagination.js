@@ -1,13 +1,11 @@
 import { html, css } from "lit";
-import { customElement } from "lit/decorators.js";
 import { Router } from "@capitec/omni-router";
 import "@lalomartins/shoestring-pagination";
 
-import { RouteAwareElement } from "../../../lib/RouteAwareElement";
+import { RouteAwareElement } from "../../../lib/RouteAwareElement.js";
 
-import { SearchOperation, SearchResultsConsumer } from "../../logic/search";
+import { SearchOperation, SearchResultsConsumer } from "../../logic/search.js";
 
-@customElement("search-results-pagination")
 export class SearchResultsPagination extends SearchResultsConsumer(
   RouteAwareElement
 ) {
@@ -32,6 +30,7 @@ export class SearchResultsPagination extends SearchResultsConsumer(
     this._value = current.queryParams.page ?? 1;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   _onChange(event) {
     const newParams = new URLSearchParams(
       Array.from(Object.entries(Router.currentLocation.queryParams))
@@ -60,3 +59,7 @@ export class SearchResultsPagination extends SearchResultsConsumer(
     `;
   }
 }
+window.customElements.define(
+  "search-results-pagination",
+  SearchResultsPagination
+);

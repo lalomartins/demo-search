@@ -1,9 +1,9 @@
+/* eslint-disable max-classes-per-file */
 import { html } from "lit";
-import { customElement } from "lit/decorators.js";
 import { createContext, ContextProvider, ContextConsumer } from "@lit/context";
 import { Router } from "@capitec/omni-router";
 
-import { RouteAwareElement } from "../../lib/RouteAwareElement";
+import { RouteAwareElement } from "../../lib/RouteAwareElement.js";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
@@ -79,7 +79,8 @@ export class SearchOperation {
         this._controller.setValue(this._suspense);
       }
     } catch (error) {
-      console.log(error);
+      // eslint-disable-next-line no-console
+      console.error(error);
       this._suspense = {
         status: "error",
         results: error,
@@ -131,9 +132,9 @@ export function useSearchResults() {
   return dummyData;
 }
 
-@customElement("search-provider")
 export class SearchProvider extends RouteAwareElement {
   _searchProvider = new ContextProvider(this, { context: searchContext });
+
   _searchResultsProvider = new ContextProvider(this, {
     context: searchResultsContext,
   });
@@ -148,7 +149,7 @@ export class SearchProvider extends RouteAwareElement {
   }
 
   _createSearch(location) {
-    const q = location.queryParams.q;
+    const { q } = location.queryParams;
     if (q == null || q?.length === 0) {
       Router.replace("/");
     } else {
@@ -165,8 +166,10 @@ export class SearchProvider extends RouteAwareElement {
     return html` <slot></slot> `;
   }
 }
+window.customElements.define("search-provider", SearchProvider);
 
-export const SearchResultsConsumer = (superClass) =>
+export const SearchResultsConsumer = superClass =>
+  // eslint-disable-next-line no-shadow
   class SearchResultsConsumer extends superClass {
     static properties = {
       searchResults: { state: true },
@@ -179,7 +182,7 @@ export const SearchResultsConsumer = (superClass) =>
       this._controller = new ContextConsumer(this, {
         context: searchResultsContext,
         subscribe: true,
-        callback: (value) => {
+        callback: value => {
           this._results = value;
           this.searchResults = value?.results;
           this.searchStatus = value?.status;

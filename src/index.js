@@ -1,14 +1,13 @@
 import { Router } from "@capitec/omni-router";
-import "@shoelace-style/shoelace/dist/themes/light.css";
-import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path";
+import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path.js";
 import "@polymer/app-layout/app-scroll-effects/effects/waterfall";
 import "@polymer/app-layout/app-layout";
 import { ContextRoot } from "@lit/context";
 
-import "./components/common/layout/logo";
-import "./components/pages/home";
-import "./components/pages/search";
-import "./components/pages/error";
+import "./components/common/layout/logo.js";
+import "./components/pages/home.js";
+import "./components/pages/search.js";
+import "./components/pages/error.js";
 
 setBasePath(
   "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/"

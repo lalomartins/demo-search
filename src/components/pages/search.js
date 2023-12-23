@@ -1,11 +1,9 @@
 import { css, html, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
 
-import "../common/search/SearchBox";
-import "../common/search/SearchTools";
-import "../common/search/SearchResultsContainer";
+import "../common/search/SearchBox.js";
+import "../common/search/SearchTools.js";
+import "../common/search/SearchResultsContainer.js";
 
-@customElement("search-results-page")
 export class SearchPageWrapper extends LitElement {
   static styles = css`
     :host(.page) {
@@ -23,3 +21,4 @@ export class SearchPageWrapper extends LitElement {
     `;
   }
 }
+window.customElements.define("search-results-page", SearchPageWrapper);

@@ -1,7 +1,5 @@
 import { css, html, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
 
-@customElement("search-home-page")
 export class HomePage extends LitElement {
   static styles = css`
     :host {
@@ -28,3 +26,4 @@ export class HomePage extends LitElement {
     </div>`;
   }
 }
+window.customElements.define("search-home-page", HomePage);

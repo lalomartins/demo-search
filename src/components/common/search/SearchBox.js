@@ -1,13 +1,11 @@
 import { html, css } from "lit";
-import { customElement } from "lit/decorators.js";
 import { Router } from "@capitec/omni-router";
-import "@shoelace-style/shoelace/dist/components/input/input";
-import "@shoelace-style/shoelace/dist/components/icon/icon";
-import "@shoelace-style/shoelace/dist/components/divider/divider";
+import "@shoelace-style/shoelace/dist/components/input/input.js";
+import "@shoelace-style/shoelace/dist/components/icon/icon.js";
+import "@shoelace-style/shoelace/dist/components/divider/divider.js";
 
-import { RouteAwareElement } from "../../../lib/RouteAwareElement";
+import { RouteAwareElement } from "../../../lib/RouteAwareElement.js";
 
-@customElement("search-box")
 export class SearchBox extends RouteAwareElement {
   static properties = {
     _value: { state: true },
@@ -29,6 +27,7 @@ export class SearchBox extends RouteAwareElement {
     this._value = current.queryParams.q ?? "";
   }
 
+  // eslint-disable-next-line class-methods-use-this
   _onChange(event) {
     const newParams = new URLSearchParams(
       Array.from(Object.entries(Router.currentLocation.queryParams))
@@ -53,3 +52,4 @@ export class SearchBox extends RouteAwareElement {
     `;
   }
 }
+window.customElements.define("search-box", SearchBox);

@@ -1,10 +1,6 @@
 import { LitElement, html, css } from "lit";
-import { customElement } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
-import { SearchResultsConsumer } from "../../logic/search";
-
-@customElement("search-result-item")
 export class SearchResultItem extends LitElement {
   static properties = {
     result: { type: Object },
@@ -47,20 +43,4 @@ export class SearchResultItem extends LitElement {
     `;
   }
 }
-
-@customElement("search-results-list")
-export class SearchResultsList extends SearchResultsConsumer(LitElement) {
-  static styles = css`
-    :host {
-      margin-top: 42px;
-      display: block;
-    }
-  `;
-
-  render() {
-    return this.searchResults?.query?.search.map(
-      (result) =>
-        html` <search-result-item .result=${result}></search-result-item> `
-    );
-  }
-}
+window.customElements.define("search-result-item", SearchResultItem);

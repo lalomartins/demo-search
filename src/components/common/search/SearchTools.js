@@ -1,12 +1,10 @@
 import { html, css } from "lit";
-import { customElement } from "lit/decorators.js";
 import { Router } from "@capitec/omni-router";
-import "@shoelace-style/shoelace/dist/components/radio-button/radio-button";
-import "@shoelace-style/shoelace/dist/components/radio-group/radio-group";
+import "@shoelace-style/shoelace/dist/components/radio-button/radio-button.js";
+import "@shoelace-style/shoelace/dist/components/radio-group/radio-group.js";
 
-import { RouteAwareElement } from "../../../lib/RouteAwareElement";
+import { RouteAwareElement } from "../../../lib/RouteAwareElement.js";
 
-@customElement("search-tools")
 export class SearchTools extends RouteAwareElement {
   static properties = {
     _value: { state: true },
@@ -29,6 +27,7 @@ export class SearchTools extends RouteAwareElement {
     this._value = current.queryParams.r ?? "engine_autoselect";
   }
 
+  // eslint-disable-next-line class-methods-use-this
   _onChange(event) {
     const newParams = new URLSearchParams(
       Array.from(Object.entries(Router.currentLocation.queryParams))
@@ -57,3 +56,4 @@ export class SearchTools extends RouteAwareElement {
     `;
   }
 }
+window.customElements.define("search-tools", SearchTools);

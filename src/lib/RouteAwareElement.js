@@ -5,9 +5,8 @@ import { Router } from "@capitec/omni-router";
 export class RouteAwareElement extends LitElement {
   #locationChanged;
 
-  locationChanged(event) {
-    console.log("route changed", event);
-  }
+  // eslint-disable-next-line class-methods-use-this
+  locationChanged() {}
 
   connectedCallback() {
     super.connectedCallback();

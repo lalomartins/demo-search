@@ -1,9 +1,7 @@
 import { LitElement, css, html } from "lit";
-import { customElement } from "lit/decorators.js";
 
-import { SearchResultsConsumer } from "../../logic/search";
+import { SearchResultsConsumer } from "../../logic/search.js";
 
-@customElement("search-results-metadata")
 export class SearchResultsMetadata extends SearchResultsConsumer(LitElement) {
   static styles = css`
     :host {
@@ -18,3 +16,4 @@ export class SearchResultsMetadata extends SearchResultsConsumer(LitElement) {
     `;
   }
 }
+window.customElements.define("search-results-metadata", SearchResultsMetadata);

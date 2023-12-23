@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="/node_modules/@shoelace-style/shoelace/dist/themes/light.css"
+    />
+    <link rel="stylesheet" href="/assets/index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="/assets/logo192.png" />
+    <link rel="manifest" href="/assets/manifest.json" />
+    <title>Lit Search Demo</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <app-header-layout>
+      <app-header slot="header" fixed effects="waterfall">
+        <app-toolbar>
+          <app-logo></app-logo>
+          <h1 main-title="">Lit Search Demo</h1>
+        </app-toolbar>
+      </app-header>
+      <main>
+        <omni-router></omni-router>
+      </main>
+    </app-header-layout>
+    <footer>
+      ©2023
+      <a href="https://lalomartins.info/" target="_blank"> Lalo Martins </a>
+    </footer>
+
+    <script type="module" src="./src/index.js"></script>
+  </body>
+</html>
