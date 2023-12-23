@@ -1,6 +1,6 @@
 import "../common/search/SearchBox";
 import "../common/search/SearchTools";
-import { SearchResultsContainer } from "../common/search/SearchResultsContainer";
+import "../common/search/SearchResultsContainer";
 
 // this is temporary
 import { css, html, LitElement } from "lit";
@@ -12,7 +12,7 @@ export function SearchPage() {
     <search-provider>
       <search-box />
       <search-tools />
-      <SearchResultsContainer />
+      <search-results-container />
     </search-provider>
   );
 }
@@ -24,14 +24,6 @@ export class SearchPageWrapper extends LitElement {
   static styles = css`
     :host(.page) {
       position: static !important;
-    }
-
-    #search-results {
-      width: var(--content-width);
-    }
-
-    #search-results > sl-spinner {
-      margin-top: 42px;
     }
   `;
 
