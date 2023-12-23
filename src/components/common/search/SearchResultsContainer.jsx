@@ -1,9 +1,9 @@
+import { Suspense } from "react";
 import SlSpinner from "@shoelace-style/shoelace/dist/react/spinner";
 
 import { SearchResultsMetadata } from "./SearchResultsMetadata";
-import { SearchResultsPagination } from "./SearchResultsPagination";
+import { SearchResultsPaginationTemp } from "./SearchResultsPagination";
 import { SearchResultsList } from "./SearchResultItem";
-import { Suspense } from "react";
 
 export function SearchResultsContainer() {
   return (
@@ -11,7 +11,7 @@ export function SearchResultsContainer() {
       <Suspense fallback={<SlSpinner style={{ fontSize: "3rem" }} />}>
         <SearchResultsMetadata />
         <SearchResultsList />
-        <SearchResultsPagination />
+        <SearchResultsPaginationTemp />
       </Suspense>
     </div>
   );
