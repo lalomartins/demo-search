@@ -1,7 +1,7 @@
 import { SearchLogic } from "../logic/search";
-import { SearchBox } from "../common/search/SearchBox";
+import "../common/search/SearchBox";
 import { SearchResultsContainer } from "../common/search/SearchResultsContainer";
-import { SearchTools } from "../common/search/SearchTools";
+import "../common/search/SearchTools";
 
 // this is temporary
 import { css, html, LitElement } from "lit";

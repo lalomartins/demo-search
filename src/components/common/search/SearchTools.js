@@ -1,7 +1,6 @@
 import { html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import { Router } from "@capitec/omni-router";
-import { useContext } from "react";
 import "@shoelace-style/shoelace/dist/components/radio-button/radio-button";
 import "@shoelace-style/shoelace/dist/components/radio-group/radio-group";
 
