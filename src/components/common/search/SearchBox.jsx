@@ -12,6 +12,7 @@ export function SearchBox() {
       navigate("/search", { state: { q: value } });
     } else {
       search.setSearchString(value);
+      search.setPage(1);
     }
   }
 

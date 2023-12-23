@@ -7,6 +7,7 @@ export function SearchTools() {
   const search = useContext(SearchContext);
   function onChange(e) {
     search.setRanking(e.target.value);
+    search.setPage(1);
   }
 
   return (
