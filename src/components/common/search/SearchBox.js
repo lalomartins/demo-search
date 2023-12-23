@@ -1,14 +1,14 @@
-import { LitElement, html, css } from "lit";
+import { html, css } from "lit";
 import { customElement } from "lit/decorators.js";
+import { Router } from "@capitec/omni-router";
 import "@shoelace-style/shoelace/dist/components/input/input";
 import "@shoelace-style/shoelace/dist/components/icon/icon";
 import "@shoelace-style/shoelace/dist/components/divider/divider";
 
-import { Router } from "@capitec/omni-router";
 import { RouteAwareElement } from "../../../lib/RouteAwareElement";
 
 @customElement("search-box")
-export class SearchBoxLit extends RouteAwareElement {
+export class SearchBox extends RouteAwareElement {
   static properties = {
     _value: { state: true },
   };
