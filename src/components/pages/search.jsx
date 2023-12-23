@@ -1,4 +1,3 @@
-import { SearchProviderReact } from "../logic/search";
 import "../common/search/SearchBox";
 import "../common/search/SearchTools";
 import { SearchResultsContainer } from "../common/search/SearchResultsContainer";
@@ -27,20 +26,11 @@ export class SearchPageWrapper extends LitElement {
       position: static !important;
     }
 
-    .metadata {
-      color: #888;
-    }
-
-    #search-box sl-input,
     #search-results {
       width: var(--content-width);
     }
 
     #search-results > sl-spinner {
-      margin-top: 42px;
-    }
-
-    #search-results-list {
       margin-top: 42px;
     }
   `;

@@ -1,8 +1,7 @@
-import { LitElement, css, html } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { html } from "lit";
+import { customElement } from "lit/decorators.js";
 import { createContext, ContextProvider, ContextConsumer } from "@lit/context";
 import { Router } from "@capitec/omni-router";
-import { useController } from "@lit/react/use-controller.js";
 
 import { RouteAwareElement } from "../../lib/RouteAwareElement";
 

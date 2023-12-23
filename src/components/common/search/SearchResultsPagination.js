@@ -5,11 +5,7 @@ import "@lalomartins/shoestring-pagination";
 
 import { RouteAwareElement } from "../../../lib/RouteAwareElement";
 
-import {
-  SearchOperation,
-  SearchResultsConsumer,
-  useSearchResults,
-} from "../../logic/search";
+import { SearchOperation, SearchResultsConsumer } from "../../logic/search";
 
 @customElement("search-results-pagination")
 export class SearchResultsPagination extends SearchResultsConsumer(

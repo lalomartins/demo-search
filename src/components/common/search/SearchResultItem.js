@@ -50,6 +50,13 @@ export class SearchResultItem extends LitElement {
 
 @customElement("search-results-list")
 export class SearchResultsList extends SearchResultsConsumer(LitElement) {
+  static styles = css`
+    :host {
+      margin-top: 42px;
+      display: block;
+    }
+  `;
+
   render() {
     return this.searchResults?.query?.search.map(
       (result) =>
