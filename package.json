@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-decorators": "^7.23.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@polymer/app-layout": "^3.1.0",
     "@shoelace-style/shoelace": "^2.12.0",
@@ -81,6 +83,9 @@
           "destructuredArrayIgnorePattern": "^_"
         }
       ]
+    },
+    "env": {
+      "NODE_ENV": "development"
     }
   },
   "browserslist": {
@@ -149,6 +154,14 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "version": "2023-05"
+        }
+      ]
     ]
   }
 }
