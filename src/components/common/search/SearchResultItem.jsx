@@ -1,4 +1,4 @@
-import { useSearchResults } from "../../logic/search";
+import { useSearchResults } from "../../../services/search";
 
 export function SearchResultItem({ result }) {
   return (

@@ -1,6 +1,6 @@
 import { Pagination } from "antd";
 
-import { useSearchResults } from "../../logic/search";
+import { useSearchResults } from "../../../services/search";
 import { useDispatch, useSelector } from "react-redux";
 import { gotoPage } from "../../../state/search";
 

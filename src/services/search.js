@@ -7,7 +7,7 @@ import {
   startLoad,
   loadFailed,
   loadResults,
-} from "../../state/search";
+} from "../state/search";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
@@ -88,7 +88,7 @@ export function useSearchResults() {
   }
 }
 
-export function SearchLogic({ children }) {
+export function useSearchOperation() {
   const dispatch = useDispatch();
 
   const searchSlice = useSelector((state) => state.search);
@@ -109,6 +109,4 @@ export function SearchLogic({ children }) {
       navigate("/", { replace: true });
     }
   }, [navigate, searchSlice.searchString]);
-
-  return <>{children}</>;
 }
