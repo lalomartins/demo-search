@@ -1,8 +1,9 @@
 import { createContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
+  SearchStatus,
   newSearch,
   gotoPage,
   setRankingProfile,
@@ -68,10 +69,7 @@ export class SearchOperation {
           })
           .catch((error) => {
             console.log(error);
-            this._suspense = {
-              status: "error",
-              results: error,
-            };
+            this._dispatch(loadFailed(error));
           })
       )
     );
@@ -84,10 +82,10 @@ export const SearchContext = createContext(null);
 export function useSearchResults() {
   const searchSlice = useSelector((state) => state.search);
   switch (searchSlice.status) {
-    case "pending":
+    case SearchStatus.PENDING:
       throw searchSlice.suspender;
 
-    case "error":
+    case SearchStatus.ERROR:
       throw searchSlice.results;
 
     default:
@@ -96,34 +94,28 @@ export function useSearchResults() {
 }
 
 export function SearchLogic({ children }) {
-  const location = useLocation();
   const dispatch = useDispatch();
 
   const searchSlice = useSelector((state) => state.search);
-  let { searchString, page } = searchSlice;
-  // if (searchSlice.searchString === "empty") {
-  // TODO this is temporary until I port the search box
-  if (searchSlice.searchString.length === 0) {
-    searchString = location.state.q;
-    page = 1;
-    dispatch(newSearch(searchString));
-  }
   const navigate = useNavigate();
   const search = useMemo(
     () =>
       new SearchOperation(
-        searchString,
-        page,
+        searchSlice.searchString,
+        searchSlice.page,
         searchSlice.ranking,
         dispatch
       )._fetch(),
-    [page, searchSlice.ranking, searchString]
+    [searchSlice.page, searchSlice.ranking, searchSlice.searchString]
   );
   useEffect(() => {
-    if (searchString == null || searchString?.length === 0) {
+    if (
+      searchSlice.searchString == null ||
+      searchSlice.searchString?.length === 0
+    ) {
       navigate("/", { replace: true });
     }
-  }, [navigate, searchString]);
+  }, [navigate, searchSlice.searchString]);
   search.setSearchString = (s) => dispatch(newSearch(s));
   search.setPage = (page) => dispatch(gotoPage(page));
   search.setRanking = (ranking) => dispatch(setRankingProfile(ranking));

@@ -1,17 +1,18 @@
-import { useContext } from "react";
 import { Input } from "antd";
 
-import { SearchContext } from "../../logic/search";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { newSearch } from "../../../state/search";
 
 export function SearchBox() {
-  const search = useContext(SearchContext);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchString = useSelector((state) => state.search.searchString);
   function onSearch(value, _e, _info) {
-    if (search == null) {
-      navigate("/search", { state: { q: value } });
-    } else {
-      search.setSearchString(value);
+    dispatch(newSearch(value));
+    if (location.pathname !== "/search") {
+      navigate("/search");
     }
   }
 
@@ -20,7 +21,7 @@ export function SearchBox() {
       <Input.Search
         placeholder="input search text"
         allowClear
-        defaultValue={search?.searchString}
+        defaultValue={searchString}
         onSearch={onSearch}
       />
     </div>

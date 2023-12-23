@@ -1,7 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const SearchStatus = Object.freeze({
+  EMPTY: "empty",
+  PENDING: "pending",
+  SUCCESS: "success",
+  ERROR: "error",
+});
+
 const initialState = {
-  status: "empty",
+  status: SearchStatus.EMPTY,
   searchString: "",
   page: 1,
   ranking: "engine_autoselect",
@@ -17,6 +24,10 @@ export const searchSlice = createSlice({
       state.searchString = action.payload;
       state.page = 1;
     },
+    clearSearch(state) {
+      state.searchString = "";
+      state.status = SearchStatus.EMPTY;
+    },
     gotoPage(state, action) {
       state.page = action.payload;
     },
@@ -25,16 +36,16 @@ export const searchSlice = createSlice({
       state.page = 1;
     },
     startLoad(state, action) {
-      state.status = "pending";
+      state.status = SearchStatus.PENDING;
       state.suspender = action.payload;
     },
     loadFailed(state, action) {
-      state.status = "error";
+      state.status = SearchStatus.ERROR;
       state.results = action.payload;
       state.suspender = null;
     },
     loadResults(state, action) {
-      state.status = "success";
+      state.status = SearchStatus.SUCCESS;
       state.results = action.payload;
       state.suspender = null;
     },
@@ -44,6 +55,7 @@ export const searchSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   newSearch,
+  clearSearch,
   gotoPage,
   setRankingProfile,
   startLoad,
