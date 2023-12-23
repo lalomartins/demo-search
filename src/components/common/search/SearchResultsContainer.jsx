@@ -1,4 +1,4 @@
-import { Spin } from "antd";
+import SlSpinner from "@shoelace-style/shoelace/dist/react/spinner";
 
 import { SearchResultsMetadata } from "./SearchResultsMetadata";
 import { SearchResultsPagination } from "./SearchResultsPagination";
@@ -8,7 +8,7 @@ import { Suspense } from "react";
 export function SearchResultsContainer() {
   return (
     <div id="search-results">
-      <Suspense fallback={<Spin size="large" />}>
+      <Suspense fallback={<SlSpinner style={{ fontSize: "3rem" }} />}>
         <SearchResultsMetadata />
         <SearchResultsList />
         <SearchResultsPagination />
