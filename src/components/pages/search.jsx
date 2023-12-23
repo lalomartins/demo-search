@@ -1,7 +1,7 @@
-import { SearchLogic } from "../logic/search";
+import { SearchProviderReact } from "../logic/search";
 import "../common/search/SearchBox";
-import { SearchResultsContainer } from "../common/search/SearchResultsContainer";
 import "../common/search/SearchTools";
+import { SearchResultsContainer } from "../common/search/SearchResultsContainer";
 
 // this is temporary
 import { css, html, LitElement } from "lit";
@@ -10,11 +10,11 @@ import { createRoot } from "react-dom/client";
 
 export function SearchPage() {
   return (
-    <SearchLogic>
+    <search-provider>
       <search-box />
       <search-tools />
       <SearchResultsContainer />
-    </SearchLogic>
+    </search-provider>
   );
 }
 

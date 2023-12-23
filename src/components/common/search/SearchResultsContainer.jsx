@@ -10,7 +10,7 @@ export function SearchResultsContainer() {
     <div id="search-results">
       <Suspense fallback={<SlSpinner style={{ fontSize: "3rem" }} />}>
         <SearchResultsMetadata />
-        <SearchResultsList />
+        <search-results-list />
         <SearchResultsPaginationTemp />
       </Suspense>
     </div>

@@ -2,7 +2,7 @@ import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
-import { useSearchResults } from "../../logic/search";
+import { SearchResultsConsumer } from "../../logic/search";
 
 @customElement("search-result-item")
 export class SearchResultItem extends LitElement {
@@ -48,17 +48,16 @@ export class SearchResultItem extends LitElement {
   }
 }
 
-export function SearchResultsList() {
-  const results = useSearchResults();
-
-  return (
-    <div id="search-results-list">
-      {results.query.search.map((result) => (
-        <search-result-item
-          key={result.pageid}
-          result={JSON.stringify(result)}
-        />
-      ))}
-    </div>
-  );
+@customElement("search-results-list")
+export class SearchResultsList extends SearchResultsConsumer {
+  render() {
+    return html`
+      <div id="search-results-list">
+        ${this.searchResults?.query?.search.map(
+          (result) =>
+            html` <search-result-item .result=${result}></search-result-item> `
+        )}
+      </div>
+    `;
+  }
 }

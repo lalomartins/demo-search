@@ -8,6 +8,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@capitec/omni-router": "^0.1.5",
     "@lalomartins/shoestring-pagination": "https://github.com/lalomartins/shoestring-pagination.git",
+    "@lit/context": "^1.1.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@polymer/app-layout": "^3.1.0",
     "@shoelace-style/shoelace": "^2.12.0",
