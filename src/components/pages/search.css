@@ -2,7 +2,7 @@
   color: #888;
 }
 
-#search-box .ant-input-search,
+#search-box sl-input,
 #search-results {
   width: var(--content-width);
 }

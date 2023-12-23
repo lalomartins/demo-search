@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { Input } from "antd";
+import SlInput from "@shoelace-style/shoelace/dist/react/input";
+import SlIcon from "@shoelace-style/shoelace/dist/react/icon";
 
 import { SearchContext } from "../../logic/search";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -8,21 +9,24 @@ export function SearchBox() {
   const search = useContext(SearchContext);
   const [searchParams, _setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  function onSearch(value, _e, info) {
+  function onSearch(event) {
     const newParams = new URLSearchParams(Array.from(searchParams.entries()));
-    newParams.set("q", value);
+    newParams.set("q", event.target.value);
     newParams.set("page", 1);
     navigate(`/search?${newParams}`);
   }
 
   return (
     <div id="search-box">
-      <Input.Search
+      <SlInput
+        type="search"
         placeholder="input search text"
-        allowClear
-        defaultValue={search?.searchstring}
-        onSearch={onSearch}
-      />
+        clearable
+        value={search?.searchstring}
+        onSlChange={onSearch}
+      >
+        <SlIcon name="search" slot="suffix" />
+      </SlInput>
     </div>
   );
 }
