@@ -51,13 +51,9 @@ export class SearchResultItem extends LitElement {
 @customElement("search-results-list")
 export class SearchResultsList extends SearchResultsConsumer(LitElement) {
   render() {
-    return html`
-      <div id="search-results-list">
-        ${this.searchResults?.query?.search.map(
-          (result) =>
-            html` <search-result-item .result=${result}></search-result-item> `
-        )}
-      </div>
-    `;
+    return this.searchResults?.query?.search.map(
+      (result) =>
+        html` <search-result-item .result=${result}></search-result-item> `
+    );
   }
 }
