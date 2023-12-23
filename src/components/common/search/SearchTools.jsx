@@ -1,12 +1,13 @@
 import { Radio, Space } from "antd";
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { SearchContext } from "../../logic/search";
+import { setRankingProfile } from "../../../state/search";
 
 export function SearchTools() {
-  const search = useContext(SearchContext);
+  const dispatch = useDispatch();
+  const ranking = useSelector((state) => state.search.ranking);
   function onChange(e) {
-    search.setRanking(e.target.value);
+    dispatch(setRankingProfile(e.target.value));
   }
 
   return (
@@ -15,7 +16,7 @@ export function SearchTools() {
         <Radio.Group
           name="r"
           size="small"
-          defaultValue={search.options.srqiprofile}
+          defaultValue={ranking}
           onChange={onChange}
         >
           <Radio.Button value="engine_autoselect">Default ranking</Radio.Button>

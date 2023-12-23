@@ -1,13 +1,15 @@
 import { Pagination } from "antd";
 
-import { SearchContext, useSearchResults } from "../../logic/search";
-import { useContext } from "react";
+import { useSearchResults } from "../../logic/search";
+import { useDispatch, useSelector } from "react-redux";
+import { gotoPage } from "../../../state/search";
 
 export function SearchResultsPagination() {
-  const search = useContext(SearchContext);
+  const search = useSelector((state) => state.search);
+  const dispatch = useDispatch();
   const results = useSearchResults();
   function onChange(value) {
-    search.setPage(value);
+    dispatch(gotoPage(value));
   }
   // Wikipedia API only returns up to 10000 results
   const total = Math.min(results.query.searchinfo.totalhits, 10000);
@@ -16,7 +18,7 @@ export function SearchResultsPagination() {
     <Pagination
       id="search-results-pagination"
       hideOnSinglePage
-      pageSize={search.constructor.PAGE_LEN}
+      pageSize={search.pageSize}
       showSizeChanger={false}
       current={search.page}
       total={total}

@@ -11,6 +11,7 @@ const initialState = {
   status: SearchStatus.EMPTY,
   searchString: "",
   page: 1,
+  pageSize: 10,
   ranking: "engine_autoselect",
   results: null,
   suspender: null,

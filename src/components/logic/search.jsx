@@ -4,9 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import {
   SearchStatus,
-  newSearch,
-  gotoPage,
-  setRankingProfile,
   startLoad,
   loadFailed,
   loadResults,
@@ -116,9 +113,6 @@ export function SearchLogic({ children }) {
       navigate("/", { replace: true });
     }
   }, [navigate, searchSlice.searchString]);
-  search.setSearchString = (s) => dispatch(newSearch(s));
-  search.setPage = (page) => dispatch(gotoPage(page));
-  search.setRanking = (ranking) => dispatch(setRankingProfile(ranking));
 
   return (
     <SearchContext.Provider value={search}>{children}</SearchContext.Provider>
