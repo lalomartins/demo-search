@@ -1,9 +1,12 @@
-import { useSearchResults } from "../../../services/search";
+import {
+  searchResultPageLink,
+  useSearchResults,
+} from "../../../services/search";
 
 export function SearchResultItem({ result }) {
   return (
     <div className="search-result-item" key={result.pageid}>
-      <a className="search-result-title" href={result.link()}>
+      <a className="search-result-title" href={searchResultPageLink(result)}>
         {result.title}
       </a>
       <p className="metadata">

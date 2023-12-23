@@ -11,72 +11,19 @@ import {
 
 const url = "https://en.wikipedia.org/w/api.php";
 
-class SearchResultPage {
-  constructor(data) {
-    Object.assign(this, data);
-  }
-
-  link() {
-    return `http://en.wikipedia.org/?curid=${this.pageid}`;
-  }
+export function searchResultPageLink() {
+  return `http://en.wikipedia.org/?curid=${this.pageid}`;
 }
 
-export class SearchOperation {
-  static PAGE_LEN = 10;
-
-  constructor(searchString, page, ranking, dispatch) {
-    this.searchString = searchString;
-    this.options = {
-      srqiprofile: ranking,
-    };
-    this.page = page;
-    this._dispatch = dispatch;
-  }
-
-  _fetch() {
-    const params = new URLSearchParams({
-      action: "query",
-      list: "search",
-      srsearch: this.searchString,
-      format: "json",
-      srqiprofile: this.options.srqiprofile,
-      sroffset: (this.page - 1) * this.constructor.PAGE_LEN,
-      origin: "*",
-    });
-    this._dispatch(
-      startLoad(
-        fetch(`${url}?${params}`)
-          .then((response) => response.json())
-          .then((response) => {
-            if (response.error != null) {
-              this._dispatch(loadFailed(response.error));
-            } else {
-              this._dispatch(
-                loadResults({
-                  ...response,
-                  query: {
-                    ...response.query,
-                    search: response.query.search.map(
-                      (item) => new SearchResultPage(item)
-                    ),
-                  },
-                })
-              );
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            this._dispatch(loadFailed(error));
-          })
-      )
-    );
-    return this;
-  }
-}
-
+/// Wrap getting the results from the Redux store to support Suspense
 export function useSearchResults() {
   const searchSlice = useSelector((state) => state.search);
   switch (searchSlice.status) {
+    case SearchStatus.EMPTY:
+      // Give Suspense a never-fulfilling promise so we get a spinner
+      // while we navigate back to home
+      throw new Promise(() => {});
+
     case SearchStatus.PENDING:
       throw searchSlice.suspender;
 
@@ -88,19 +35,12 @@ export function useSearchResults() {
   }
 }
 
+/// Perform search and put results in the store
 export function useSearchOperation() {
   const dispatch = useDispatch();
-
   const searchSlice = useSelector((state) => state.search);
   const navigate = useNavigate();
-  useEffect(() => {
-    new SearchOperation(
-      searchSlice.searchString,
-      searchSlice.page,
-      searchSlice.ranking,
-      dispatch
-    )._fetch();
-  }, [searchSlice.page, searchSlice.ranking, searchSlice.searchString]);
+
   useEffect(() => {
     if (
       searchSlice.searchString == null ||
@@ -109,4 +49,45 @@ export function useSearchOperation() {
       navigate("/", { replace: true });
     }
   }, [navigate, searchSlice.searchString]);
+  useEffect(() => {
+    if (
+      searchSlice.searchString == null ||
+      searchSlice.searchString?.length === 0
+    )
+      return;
+    const params = new URLSearchParams({
+      action: "query",
+      list: "search",
+      srsearch: searchSlice.searchString,
+      format: "json",
+      srqiprofile: searchSlice.ranking,
+      sroffset: (searchSlice.page - 1) * searchSlice.pageSize,
+      origin: "*",
+    });
+    dispatch(
+      startLoad(
+        fetch(`${url}?${params}`)
+          .then((response) => response.json())
+          .then((response) => {
+            if (response.error != null) {
+              dispatch(loadFailed(response.error));
+            } else {
+              dispatch(loadResults(response));
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            dispatch(loadFailed(error));
+          })
+      )
+    );
+  }, [
+    // dispatch is stable, but we include it here anyway to make the linter happier
+    // https://react-redux.js.org/api/hooks#usedispatch
+    dispatch,
+    searchSlice.page,
+    searchSlice.pageSize,
+    searchSlice.ranking,
+    searchSlice.searchString,
+  ]);
 }
