@@ -38,16 +38,18 @@ app-header {
   box-shadow: var(--sl-shadow-medium);
 }
 
-.App-logo {
-  margin-right: 1em;
-}
-
 main {
   display: flex;
   flex-direction: column;
   padding: 24px var(--content-hpadding);
   min-height: calc(100vh - 128px);
   box-sizing: border-box;
+  position: relative;
+}
+
+omni-router {
+  display: block;
+  flex-grow: 1;
 }
 
 footer {

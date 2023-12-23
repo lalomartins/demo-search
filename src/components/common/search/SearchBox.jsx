@@ -1,20 +1,21 @@
-import { useContext } from "react";
+import { LitElement, html, css } from "lit";
+import { customElement } from "lit/decorators.js";
 import SlInput from "@shoelace-style/shoelace/dist/react/input";
 import SlIcon from "@shoelace-style/shoelace/dist/react/icon";
 import SlDivider from "@shoelace-style/shoelace/dist/react/divider";
 
-import { SearchContext } from "../../logic/search";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Router } from "@capitec/omni-router";
 
 export function SearchBox() {
-  const search = useContext(SearchContext);
-  const [searchParams, _setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const location = Router.currentLocation;
   function onChange(event) {
-    const newParams = new URLSearchParams(Array.from(searchParams.entries()));
+    console.log(event);
+    const newParams = new URLSearchParams(
+      Array.from(Object.entries(location.queryParams))
+    );
     newParams.set("q", event.target.value);
     newParams.set("page", 1);
-    navigate(`/search?${newParams}`);
+    Router.push(`/search?${newParams}`);
   }
 
   return (
@@ -23,7 +24,7 @@ export function SearchBox() {
         type="search"
         placeholder="input search text"
         clearable
-        value={search?.searchstring}
+        value={location.queryParams.q ?? ""}
         onSlChange={onChange}
       >
         <SlDivider vertical slot="suffix" />
@@ -31,4 +32,17 @@ export function SearchBox() {
       </SlInput>
     </div>
   );
+}
+
+@customElement("search-box")
+export class SearchBoxLit extends LitElement {
+  static styles = css`
+  sl-input
+    width: var(--content-width);
+  }
+  `;
+
+  render() {
+    return html``;
+  }
 }
