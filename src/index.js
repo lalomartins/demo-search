@@ -8,7 +8,6 @@ import "./components/common/layout/logo";
 import "./components/pages/home";
 import "./components/pages/search";
 import "./components/pages/error";
-import reportWebVitals from "./reportWebVitals";
 
 setBasePath(
   "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/"
@@ -35,8 +34,3 @@ Router.addRoute({
 });
 
 Router.load();
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
