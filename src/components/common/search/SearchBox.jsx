@@ -11,6 +11,7 @@ export function SearchBox() {
   function onSearch(value, _e, info) {
     const newParams = new URLSearchParams(Array.from(searchParams.entries()));
     newParams.set("q", value);
+    newParams.set("page", 1);
     navigate(`/search?${newParams}`);
   }
 

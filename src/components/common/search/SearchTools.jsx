@@ -10,6 +10,7 @@ export function SearchTools() {
   function onChange(e) {
     const newParams = new URLSearchParams(Array.from(searchParams.entries()));
     newParams.set("r", e.target.value);
+    newParams.set("page", 1);
     setSearchParams(newParams);
   }
 
