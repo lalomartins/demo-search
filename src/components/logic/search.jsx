@@ -3,14 +3,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const url = "https://en.wikipedia.org/w/api.php";
 
-class SearchResultPage {
-  constructor(data) {
-    Object.assign(this, data);
-  }
-
-  link() {
-    return `http://en.wikipedia.org/?curid=${this.pageid}`;
-  }
+export function searchResultPageLink() {
+  return `http://en.wikipedia.org/?curid=${this.pageid}`;
 }
 
 export class SearchOperation {
@@ -69,15 +63,7 @@ export class SearchOperation {
           } else {
             this._suspense = {
               status: "success",
-              results: {
-                ...response,
-                query: {
-                  ...response.query,
-                  search: response.query.search.map(
-                    (item) => new SearchResultPage(item)
-                  ),
-                },
-              },
+              results: response,
             };
           }
         })

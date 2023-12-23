@@ -18,21 +18,3 @@
 #search-results-list {
   margin-top: 42px;
 }
-
-.search-result-item {
-  margin-bottom: 42px;
-  font-size: 12pt;
-}
-
-.search-result-item > p,
-.search-result-item > div {
-  margin: 3pt 0;
-}
-
-.search-result-title {
-  font-size: 150%;
-}
-
-.search-result-snippet .searchmatch {
-  font-weight: 600;
-}

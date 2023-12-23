@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
-import "@polymer/app-layout/app-layout.js";
+import "@polymer/app-layout/app-layout";
+import "@polymer/app-layout/app-scroll-effects/effects/waterfall";
 
 import logo from "./logo.svg";
 
@@ -19,7 +20,7 @@ export function MainLayout() {
               alt="logo"
               style={{ height: 32 }}
             />
-            <h1 main-title>Lit Search Demo</h1>
+            <h1 main-title="">Lit Search Demo</h1>
           </app-toolbar>
         </app-header>
         <main>
