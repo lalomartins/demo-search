@@ -49,7 +49,7 @@ export class SearchResultItem extends LitElement {
 }
 
 @customElement("search-results-list")
-export class SearchResultsList extends SearchResultsConsumer {
+export class SearchResultsList extends SearchResultsConsumer(LitElement) {
   render() {
     return html`
       <div id="search-results-list">

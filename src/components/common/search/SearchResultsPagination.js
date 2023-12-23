@@ -5,20 +5,17 @@ import "@lalomartins/shoestring-pagination";
 
 import { RouteAwareElement } from "../../../lib/RouteAwareElement";
 
-import { SearchOperation, useSearchResults } from "../../logic/search";
-
-export function SearchResultsPaginationTemp() {
-  const results = useSearchResults();
-
-  return (
-    <search-results-pagination total={results.query.searchinfo.totalhits} />
-  );
-}
+import {
+  SearchOperation,
+  SearchResultsConsumer,
+  useSearchResults,
+} from "../../logic/search";
 
 @customElement("search-results-pagination")
-export class SearchResultsPagination extends RouteAwareElement {
+export class SearchResultsPagination extends SearchResultsConsumer(
+  RouteAwareElement
+) {
   static properties = {
-    total: { type: Number },
     _value: { state: true },
   };
 
@@ -49,7 +46,10 @@ export class SearchResultsPagination extends RouteAwareElement {
 
   render() {
     // Wikipedia API only returns up to 10000 results
-    const total = Math.min(this.total, 10000);
+    const total = Math.min(
+      this.searchResults?.query?.searchinfo?.totalhits ?? 1,
+      10000
+    );
 
     return html`
       <shoestring-pagination

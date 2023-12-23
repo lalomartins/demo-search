@@ -167,23 +167,24 @@ export class SearchProvider extends RouteAwareElement {
   }
 }
 
-export class SearchResultsConsumer extends LitElement {
-  static properties = {
-    searchResults: { state: true },
-    searchStatus: { state: true },
-  };
+export const SearchResultsConsumer = (superClass) =>
+  class SearchResultsConsumer extends superClass {
+    static properties = {
+      searchResults: { state: true },
+      searchStatus: { state: true },
+    };
 
-  constructor() {
-    super();
-    this.searchResults = {};
-    this._controller = new ContextConsumer(this, {
-      context: searchResultsContext,
-      subscribe: true,
-      callback: (value) => {
-        this._results = value;
-        this.searchResults = value?.results;
-        this.searchStatus = value?.status;
-      },
-    });
-  }
-}
+    constructor() {
+      super();
+      this.searchResults = {};
+      this._controller = new ContextConsumer(this, {
+        context: searchResultsContext,
+        subscribe: true,
+        callback: (value) => {
+          this._results = value;
+          this.searchResults = value?.results;
+          this.searchStatus = value?.status;
+        },
+      });
+    }
+  };
