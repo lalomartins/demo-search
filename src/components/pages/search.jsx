@@ -12,7 +12,7 @@ export function SearchPage() {
   return (
     <SearchLogic>
       <search-box />
-      <SearchTools />
+      <search-tools />
       <SearchResultsContainer />
     </SearchLogic>
   );
@@ -34,10 +34,6 @@ export class SearchPageWrapper extends LitElement {
     #search-box sl-input,
     #search-results {
       width: var(--content-width);
-    }
-
-    #search-tools {
-      margin-top: 3pt;
     }
 
     #search-results > sl-spinner {
