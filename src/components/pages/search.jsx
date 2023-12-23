@@ -23,6 +23,10 @@ export class SearchPageWrapper extends LitElement {
   #reactRoot;
 
   static styles = css`
+    :host(.page) {
+      position: static !important;
+    }
+
     .metadata {
       color: #888;
     }

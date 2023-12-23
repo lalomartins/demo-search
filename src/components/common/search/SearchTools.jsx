@@ -3,16 +3,18 @@ import SlRadioButton from "@shoelace-style/shoelace/dist/react/radio-button";
 import SlRadioGroup from "@shoelace-style/shoelace/dist/react/radio-group";
 
 import { SearchContext } from "../../logic/search";
-import { useSearchParams } from "react-router-dom";
+import { Router } from "@capitec/omni-router";
 
 export function SearchTools() {
   const search = useContext(SearchContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const location = Router.currentLocation;
   function onChange(e) {
-    const newParams = new URLSearchParams(Array.from(searchParams.entries()));
+    const newParams = new URLSearchParams(
+      Array.from(Object.entries(location.queryParams))
+    );
     newParams.set("r", e.target.value);
     newParams.set("page", 1);
-    setSearchParams(newParams);
+    Router.push(`/search?${newParams}`);
   }
 
   return (

@@ -2,16 +2,18 @@ import { Pagination } from "antd";
 
 import { SearchContext } from "../../logic/search";
 import { useContext } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Router } from "@capitec/omni-router";
 
 export function SearchResultsPagination() {
   const search = useContext(SearchContext);
   const results = search.results();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const location = Router.currentLocation;
   function onChange(value) {
-    const newParams = new URLSearchParams(Array.from(searchParams.entries()));
+    const newParams = new URLSearchParams(
+      Array.from(Object.entries(location.queryParams))
+    );
     newParams.set("page", value);
-    setSearchParams(newParams);
+    Router.push(`/search?${newParams}`);
   }
   // Wikipedia API only returns up to 10000 results
   const total = Math.min(results.query.searchinfo.totalhits, 10000);
