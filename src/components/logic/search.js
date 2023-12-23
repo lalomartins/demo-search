@@ -21,32 +21,18 @@ export class SearchOperation {
     };
     this.page = params.page ?? 1;
     this._controller = controller;
-    this._suspense = {
+    this._task = {
       status: "pending",
       suspender: null,
     };
   }
 
-  // integrate with Suspense
-  results() {
-    switch (this._suspense.status) {
-      case "pending":
-        throw this._suspense.suspender;
-
-      case "error":
-        throw this._suspense.results;
-
-      default:
-        return this._suspense.results;
-    }
-  }
-
   get ready() {
-    return this._suspense.status === "success";
+    return this._task.status === "success";
   }
 
   _fetch() {
-    this._suspense = {
+    this._task = {
       status: "pending",
       suspender: this._fetchInner(),
     };
@@ -66,26 +52,26 @@ export class SearchOperation {
       const json = await fetch(`${url}?${params}`);
       const response = await json.json();
       if (response.error != null) {
-        this._suspense = {
+        this._task = {
           status: "error",
           results: response.error,
         };
-        this._controller.setValue(this._suspense);
+        this._controller.setValue(this._task);
       } else {
-        this._suspense = {
+        this._task = {
           status: "success",
           results: response,
         };
-        this._controller.setValue(this._suspense);
+        this._controller.setValue(this._task);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      this._suspense = {
+      this._task = {
         status: "error",
         results: error,
       };
-      this._controller.setValue(this._suspense);
+      this._controller.setValue(this._task);
     }
   }
 }
