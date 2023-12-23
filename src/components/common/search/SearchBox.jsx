@@ -1,48 +1,55 @@
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-import SlInput from "@shoelace-style/shoelace/dist/react/input";
-import SlIcon from "@shoelace-style/shoelace/dist/react/icon";
-import SlDivider from "@shoelace-style/shoelace/dist/react/divider";
+import "@shoelace-style/shoelace/dist/components/input/input";
+import "@shoelace-style/shoelace/dist/components/icon/icon";
+import "@shoelace-style/shoelace/dist/components/divider/divider";
 
 import { Router } from "@capitec/omni-router";
+import { RouteAwareElement } from "../../../lib/RouteAwareElement";
 
-export function SearchBox() {
-  const location = Router.currentLocation;
-  function onChange(event) {
-    console.log(event);
+@customElement("search-box")
+export class SearchBoxLit extends RouteAwareElement {
+  static properties = {
+    _value: { state: true },
+  };
+
+  static styles = css`
+    sl-input {
+      width: var(--content-width);
+    }
+  `;
+
+  constructor() {
+    super();
+    const location = Router.currentLocation;
+    this._value = location.queryParams.q ?? "";
+  }
+
+  locationChanged({ current }) {
+    this._value = current.queryParams.q ?? "";
+  }
+
+  _onChange(event) {
     const newParams = new URLSearchParams(
-      Array.from(Object.entries(location.queryParams))
+      Array.from(Object.entries(Router.currentLocation.queryParams))
     );
     newParams.set("q", event.target.value);
     newParams.set("page", 1);
     Router.push(`/search?${newParams}`);
   }
 
-  return (
-    <div id="search-box">
-      <SlInput
+  render() {
+    return html`
+      <sl-input
         type="search"
         placeholder="input search text"
         clearable
-        value={location.queryParams.q ?? ""}
-        onSlChange={onChange}
+        value=${this._value}
+        @sl-change=${this._onChange}
       >
-        <SlDivider vertical slot="suffix" />
-        <SlIcon name="search" slot="suffix" />
-      </SlInput>
-    </div>
-  );
-}
-
-@customElement("search-box")
-export class SearchBoxLit extends LitElement {
-  static styles = css`
-  sl-input
-    width: var(--content-width);
-  }
-  `;
-
-  render() {
-    return html``;
+        <sl-divider vertical slot="suffix"></sl-divider>
+        <sl-icon name="search" slot="suffix"></sl-icon>
+      </sl-input>
+    `;
   }
 }

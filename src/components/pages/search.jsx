@@ -11,7 +11,7 @@ import { createRoot } from "react-dom/client";
 export function SearchPage() {
   return (
     <SearchLogic>
-      <SearchBox />
+      <search-box />
       <SearchTools />
       <SearchResultsContainer />
     </SearchLogic>

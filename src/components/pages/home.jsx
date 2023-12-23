@@ -28,15 +28,9 @@ export class HomePageWrapper extends LitElement {
     }
   `;
 
-  updated() {
-    if (this.#reactRoot === undefined) {
-      const rootElement = this.renderRoot.querySelector("#home-search-box");
-      this.#reactRoot = createRoot(rootElement);
-    }
-    this.#reactRoot.render(<SearchBox />);
-  }
-
   render() {
-    return html`<div id="home-search-box"></div>`;
+    return html`<div id="home-search-box">
+      <search-box />
+    </div>`;
   }
 }
