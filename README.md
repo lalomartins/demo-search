@@ -1,19 +1,11 @@
-<p align="center">
-  <img width="200" src="https://open-wc.org/hero.png"></img>
-</p>
+# Demo search with Lit and Web Components
 
-## Open-wc Starter App
+Searches the Wikipedia API in a single-page app.
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/db12744c-008f-4ed2-919f-1f127d848c54/deploy-status?branch=lit)](https://lit--demo-search-lalomartins.netlify.app/)
 
 [![Built with open-wc recommendations](https://img.shields.io/badge/built%20with-open--wc-blue.svg)](https://github.com/open-wc)
 
-## Quickstart
-
-To get started:
-
-```bash
-npm init @open-wc
-# requires node 10 & npm 6 or higher
-```
 
 ## Scripts
 
@@ -23,9 +15,3 @@ npm init @open-wc
 - `test` runs your test suite with Web Test Runner
 - `lint` runs the linter for your project
 - `format` fixes linting and formatting errors
-
-## Tooling configs
-
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
