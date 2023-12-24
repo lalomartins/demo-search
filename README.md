@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Demo search with React (no browser history)
+
+Searches the Wikipedia API in a single-page app.
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/db12744c-008f-4ed2-919f-1f127d848c54/deploy-status?branch=non-history)](https://non-history--demo-search-lalomartins.netlify.app/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
