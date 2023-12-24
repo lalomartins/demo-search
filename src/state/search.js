@@ -43,12 +43,10 @@ export const searchSlice = createSlice({
     loadFailed(state, action) {
       state.status = SearchStatus.ERROR;
       state.results = action.payload;
-      state.suspender = null;
     },
     loadResults(state, action) {
       state.status = SearchStatus.SUCCESS;
       state.results = action.payload;
-      state.suspender = null;
     },
   },
 });

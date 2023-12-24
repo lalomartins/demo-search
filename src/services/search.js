@@ -15,6 +15,8 @@ export function searchResultPageLink(page) {
   return `http://en.wikipedia.org/?curid=${page.pageid}`;
 }
 
+const promises = new Map();
+
 /// Wrap getting the results from the Redux store to support Suspense
 export function useSearchResults() {
   const searchSlice = useSelector((state) => state.search);
@@ -25,7 +27,7 @@ export function useSearchResults() {
       throw new Promise(() => {});
 
     case SearchStatus.PENDING:
-      throw searchSlice.suspender;
+      throw promises.get(searchSlice.suspender);
 
     case SearchStatus.ERROR:
       throw searchSlice.results;
@@ -64,23 +66,27 @@ export function useSearchOperation() {
       sroffset: (searchSlice.page - 1) * searchSlice.pageSize,
       origin: "*",
     });
-    dispatch(
-      startLoad(
-        fetch(`${url}?${params}`)
-          .then((response) => response.json())
-          .then((response) => {
-            if (response.error != null) {
-              dispatch(loadFailed(response.error));
-            } else {
-              dispatch(loadResults(response));
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            dispatch(loadFailed(error));
-          })
-      )
+    const suspender = Date.now();
+    promises.set(
+      suspender,
+      fetch(`${url}?${params}`)
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.error != null) {
+            dispatch(loadFailed(response.error));
+          } else {
+            dispatch(loadResults(response));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          dispatch(loadFailed(error));
+        })
+        .finally(() => {
+          promises.delete(suspender);
+        })
     );
+    dispatch(startLoad(suspender));
   }, [
     // dispatch is stable, but we include it here anyway to make the linter happier
     // https://react-redux.js.org/api/hooks#usedispatch
