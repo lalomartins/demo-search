@@ -11,8 +11,8 @@ import {
 
 const url = "https://en.wikipedia.org/w/api.php";
 
-export function searchResultPageLink() {
-  return `http://en.wikipedia.org/?curid=${this.pageid}`;
+export function searchResultPageLink(page) {
+  return `http://en.wikipedia.org/?curid=${page.pageid}`;
 }
 
 /// Wrap getting the results from the Redux store to support Suspense
