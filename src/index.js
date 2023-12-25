@@ -3,15 +3,19 @@ import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path.j
 import "@polymer/app-layout/app-scroll-effects/effects/waterfall";
 import "@polymer/app-layout/app-layout";
 import { ContextRoot } from "@lit/context";
+import "@shoelace-style/shoelace/dist/components/switch/switch.js";
+import "@shoelace-style/shoelace/dist/components/icon/icon.js";
+import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
+import "@shoelace-style/shoelace/dist/components/visually-hidden/visually-hidden.js";
+import "@lalomartins/shoestring-theme-selector/shoestring-theme-selector.js";
+import "@lalomartins/shoestring-pagination/shoestring-pagination.js";
 
 import "./components/common/layout/logo.js";
 import "./components/pages/home.js";
 import "./components/pages/search.js";
 import "./components/pages/error.js";
 
-setBasePath(
-  "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/"
-);
+setBasePath("node_modules/@shoelace-style/shoelace/dist/");
 
 Router.addRoute({
   name: "search-home-page",
@@ -35,3 +39,10 @@ Router.addRoute({
 
 new ContextRoot().attach(document.body);
 Router.load();
+
+document
+  .querySelector("shoestring-theme-selector")
+  .addEventListener("theme-change", event => {
+    // eslint-disable-next-line no-console
+    console.log(`Dark mode toggled ${event.detail.isDark ? "on" : "off"}`);
+  });

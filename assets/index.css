@@ -34,7 +34,7 @@ code {
 }
 
 app-header {
-  background-color: white;
+  background-color: var(--sl-color-neutral-0);
   box-shadow: var(--sl-shadow-medium);
 }
 
