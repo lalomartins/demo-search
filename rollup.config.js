@@ -69,7 +69,13 @@ export default {
       runtimeCaching: [{ urlPattern: "polyfills/*.js", handler: "CacheFirst" }],
     }),
     copy({
-      targets: [{ src: "assets/**/*", dest: "build/assets" }],
+      targets: [
+        { src: "assets", dest: "build" },
+        {
+          src: "node_modules/@shoelace-style/shoelace/dist/assets",
+          dest: "build/node_modules/@shoelace-style/shoelace/dist",
+        },
+      ],
     }),
   ],
 };

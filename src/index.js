@@ -5,10 +5,7 @@ import "@polymer/app-layout/app-layout";
 import { ContextRoot } from "@lit/context";
 import "@shoelace-style/shoelace/dist/components/switch/switch.js";
 import "@shoelace-style/shoelace/dist/components/icon/icon.js";
-import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
-import "@shoelace-style/shoelace/dist/components/visually-hidden/visually-hidden.js";
 import "@lalomartins/shoestring-theme-selector/shoestring-theme-selector.js";
-import "@lalomartins/shoestring-pagination/shoestring-pagination.js";
 
 import "./components/common/layout/logo.js";
 import "./components/pages/home.js";

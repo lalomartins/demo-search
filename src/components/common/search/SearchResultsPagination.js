@@ -1,6 +1,9 @@
 import { html, css } from "lit";
 import { Router } from "@capitec/omni-router";
-import "@lalomartins/shoestring-pagination";
+import "@shoelace-style/shoelace/dist/components/button/button.js";
+import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
+import "@shoelace-style/shoelace/dist/components/visually-hidden/visually-hidden.js";
+import "@lalomartins/shoestring-pagination/shoestring-pagination.js";
 
 import { RouteAwareElement } from "../../../lib/RouteAwareElement.js";
 
